@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <div class="post">
+    <img class="prof-pic" src="{{url_for('static', filename='profile_pics/' + post.author.image_file)}}"/>
+    <h1>{{post.title}}</h1>
+    <p>{{post.date_posted.strftime('%Y-%m-%d')}}</p>
+    <h2>{{post.author.username}}</h2>
+    <p>{{post.content}}</p> 
+    {% if post.author == current_user %}
+    <button><a href="{{url_for('update_post', post_id=post.id)}}">Update? </a></button> 
+    <button><a href="{{url_for('delete_post', post_id=post.id)}}">Delete? </a></button> 
+    <!-- insert verification modal! -->
+    {% endif %}
+    </div>
+</div>
+{% endblock %}
