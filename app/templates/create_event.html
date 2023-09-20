@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="background-gradient"></div>
+<form method="POST" action="" enctype="multipart/form-data" id="new-event-form">
+    <h1 id="submit-new-event-header">Submit New Event</h1>
+    {{ form.hidden_tag() }}
+    <div id="event-name" class="event-form-field">
+        {{ form.name.label(class='form-control-label') }}
+
+        {% if form.name.errors %}
+            {{ form.username(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.name(class='form-control') }}
+        {% endif %}
+    </div>
+    <div id="event-date" class="event-form-field">
+        {{ form.date.label(class='form-control-label') }}
+        {% if form.date.errors %}
+            {{ form.date(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.date.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.date(class='form-control') }}
+        {% endif %}
+    </div>
+    <div id="event-flier" class="event-form-field">
+        {{ form.picture.label(class='form-control-label') }}
+        {% if form.picture.errors %}
+            {{ form.picture(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.picture.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.picture(class='form-control') }}
+        {% endif %}
+    </div>
+    <div id="event-description" class="event-form-field">
+        {{ form.description.label(class='form-control-label') }}
+        {% if form.description.errors %}
+            {{ form.description(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.description.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.description(class='form-control') }}
+        {% endif %}
+    </div>
+    <div id="event-description-long" class="event-form-field">
+        {{ form.description_long.label(class='form-control-label') }}
+        {% if form.description_long.errors %}
+            {{ form.description_long(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.description_long(class='form-control') }}
+        {% endif %}
+    </div>
+    <div id="event-category" class="event-form-field">
+        {{ form.category.label(class='form-control-label') }}
+
+        {% if form.category.errors %}
+            {{ form.category(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.category.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.category(class='form-control') }}
+        {% endif %}
+    </div>
+    <div id="event-tags" class="event-form-field">
+        {{ form.tags.label(class='form-control-label') }}
+
+        {% if form.tags.errors %}
+            {{ form.tags(class='form-control is-invalid') }}
+            <div class="invalid feedback">
+                {% for error in form.tags.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.tags(class='form-control') }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{form.submit(class='btn')}}
+    </div>
+</form>
+
+
+{% endblock content%}

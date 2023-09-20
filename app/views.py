@@ -3,15 +3,20 @@ import os
 from PIL import Image
 from flask import Flask, render_template, request, url_for, flash, redirect, abort
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from app.models import User, Post
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EventForm
+from app.models import User, Post, Event
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
 @app.route('/home')
 def home():
-   posts = Post.query.all()
-   return render_template('index.html', posts=posts)
+   events = Event.query.all()
+   return render_template('index.html', events=events)
+
+@app.route('/all-users')
+def all_users():
+      users = User.query.all()
+      return render_template('all_users.html', users=users)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -46,7 +51,7 @@ def logout():
    logout_user()
    return redirect(url_for('home'))
 
-def save_picture(form_picture):
+def save_profile_picture(form_picture):
    random_hex = secrets.token_hex(8)
    f_name, f_ext = os.path.splitext(form_picture.filename)
    picture_fn = random_hex + f_ext
@@ -60,13 +65,24 @@ def save_picture(form_picture):
       os.remove(prev_picture)
    return picture_fn
 
+def save_flier_picture(form_picture):
+   random_hex = secrets.token_hex(8)
+   f_name, f_ext = os.path.splitext(form_picture.filename)
+   picture_fn = random_hex + f_ext
+   picture_path = os.path.join(app.root_path, 'static/flier_pics', picture_fn)
+   output_size = (300, 300)
+   i = Image.open(form_picture)
+   i.thumbnail(output_size)
+   i.save(picture_path)
+   return picture_fn
+
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
    form = UpdateAccountForm()
    if form.validate_on_submit():
       if form.picture.data:
-         picture_file = save_picture(form.picture.data)
+         picture_file = save_profile_picture(form.picture.data)
          current_user.image_file = picture_file
       current_user.username = form.username.data
       current_user.email = form.email.data
@@ -79,17 +95,23 @@ def account():
    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
    return render_template('account.html', title='Account', image_file=image_file, form=form)
 
-@app.route('/post/new', methods=['GET', 'POST'])
+@app.route('/event/new', methods=['GET', 'POST'])
 @login_required
-def new_post():
-   form = PostForm()
+def new_event():
+   form = EventForm()
    if form.validate_on_submit():
-      post = Post(title=form.title.data, content=form.content.data, author=current_user)
-      db.session.add(post)
-      db.session.commit()
-      flash('Your post has been created!', 'success')
-      return redirect(url_for('home'))
-   return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+      if form.picture.data:
+         picture_file = save_flier_picture(form.picture.data)
+         flash(picture_file)
+         event = Event(name=form.name.data, description=form.description.data, 
+            picture=picture_file, date=form.date.data, description_long=form.description_long.data,
+            category=form.category.data, tags=form.category.data, 
+            author=current_user)
+         db.session.add(event)
+         db.session.commit()
+         flash('Your event has been created!', 'success')
+         return redirect(url_for('home'))
+   return render_template('create_event.html', title='New Event', form=form, legend='New Event')
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
@@ -127,4 +149,14 @@ def delete_post(post_id):
       flash('Your post has been deleted!', 'success')
       return redirect(url_for('home'))
 
-
+# @app.route('/post/new', methods=['GET', 'POST'])
+# @login_required
+# def new_post():
+#    form = PostForm()
+#    if form.validate_on_submit():
+#       post = Post(title=form.title.data, content=form.content.data, author=current_user)
+#       db.session.add(post)
+#       db.session.commit()
+#       flash('Your post has been created!', 'success')
+#       return redirect(url_for('home'))
+#    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
