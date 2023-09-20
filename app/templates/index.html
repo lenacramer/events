@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
-    {% for post in posts %}
-    <div class="post">
-    <img class="prof-pic" src="{{url_for('static', filename='profile_pics/' + post.author.image_file)}}"/>
-    <h1><a href="{{url_for('post', post_id=post.id)}}">{{post.title}}</a></h1>
-    <p>{{post.date_posted.strftime('%Y-%m-%d')}}</p>
-    <h2>{{post.author.username}}</h2>
-    <p>{{post.content}}</p>
+<div id="header">
+    <img id="logo" src="../static/base_pics/logo.png">
+</div>
+<div id="background-gradient"></div>
+<div id="event-cards">
+    {% for event in events %}
+    <div class="event-card">
+    <img class="event-flier" src="{{url_for('static', filename='flier_pics/' + event.picture)}}"/>
+    <h1>{{event.name}}</a></h1>
+    <p>{{event.category}}</p>
+    <h2>{{event.date}}</h2>
+    <p>{{event.author.username}}</p>
+    <p>{{event.description}}</p>
+
     
     </div>
     {% endfor %}

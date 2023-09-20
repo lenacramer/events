@@ -12,10 +12,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    events = db.relationship('Event', backref='author', lazy=True)
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,3 +25,17 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(250), nullable=False)
+    description_long = db.Column(db.Text)
+    picture = db.Column(db.String(20), default='default.jpg')
+    date = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    tags = db.Column(db.String(100))
+    category = db.Column(db.String(20))
+
+    def __repr__(self):
+        return f"Event('{self.name}', '{self.date}')"

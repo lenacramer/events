@@ -5,10 +5,10 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 app = Flask(__name__)
-app = Flask(__name__)
 app.config['SECRET_KEY'] = 'd8edf9345fa4343375d3b362959f3cd3'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOADED_PHOTOS_DEST'] = 'static'
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

@@ -17,7 +17,7 @@
             <!-- <p class='navbar-option'>Home</p> -->
             <a class='navbar-option' href="/">Home</a>
             {% if current_user.is_authenticated %}
-            <a class="navbar-option" href="{{url_for('new_post')}}">New Post</a>
+            <a class="navbar-option" href="{{url_for('new_event')}}">New Event</a>
             <a class="navbar-option" href="{{url_for('account')}}">Account</a>
             <a class="navbar-option" href="{{url_for('logout')}}">Logout</a>
             {% else %}

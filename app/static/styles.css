@@ -5,28 +5,71 @@
     font-family: 'Open Sans', helvetica, sans-serif;
     font-weight: 100;
     box-sizing: border-box;
+    font-family: monospace;
+    text-decoration: none;
+    color: rgb(117, 30, 188);
     /* border: 1px solid red; */
   }
 
-  #navbar{
-    width: 100%;
-    height: 30px;
-    background-color: gainsboro;
-    color: white;
+body{
+  /* background: linear-gradient(0deg, rgba(105,85,122,1) 0%, rgba(56,45,66,1) 31%, rgba(0,0,0,1) 70%, rgba(0,0,0,1) 100%); */
+  height: 100%;
+}
+
+.event-card{
+  background-color: black;
+  margin: 30px;
+  width: 400px;
+  border: 1px yellowgreen solid;
+  border-radius: 5px;
+}
+
+.event-flier{
+  background-color: black;
+}
+.event-flier:hover{
+  filter: invert(100%);
+  cursor: pointer;
+}
+
+#event-cards{
+  display: flex;
+  flex-wrap: wrap;
+  overflow: wrap;
+}
+
+#background-gradient{
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(105,85,122,1) 0%, rgba(56,45,66,1) 31%, rgba(0,0,0,1) 70%, rgba(0,0,0,1) 100%);
+}
+
+a:hover{
+  color: greenyellow;
+}
+
+#logo{
+  width: 80vw;
+  background: black;
+}
+
+#header{
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
+#navbar{
+    width: 100vw;
+    font-size: 18px;
+    background-color: black;
+    color: rgb(117, 30, 188);
     display: flex;
     justify-content: space-around;
-    line-height: 30px;
+    margin-top: 15px;
   }
-
-#footer{
-  bottom: 0;
-  position: absolute;
-  background-color: gainsboro;
-  width: 100%;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-}
 
 .prof-pic{
   height: 200px;
@@ -39,4 +82,46 @@
   border: 1px black solid;
   padding: 5px;
   margin: 10px;
+}
+
+#new-event-form{
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+  justify-items: center;
+  text-align: center;
+  background: black;
+  width: 420px;
+  padding-bottom: 10px;
+  border: 1px solid yellowgreen;
+  border-radius: 5px;
+  
+}
+
+#submit-new-event-header{
+  margin: 20px;
+}
+.event-form-field{
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 10px auto;
+  width: 350px;
+  font-size: 16px;
+}
+
+input, textarea, select{
+  background-color: black;
+  border: yellowgreen solid 1px;
+  border-radius: 2px;
+  color: yellowgreen
+}
+
+*:focus{
+  outline: yellowgreen;
+}
+
+.form-control-label{
+  margin-bottom: 2px;
 }
